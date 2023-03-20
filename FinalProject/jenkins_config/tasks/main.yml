@@ -1,0 +1,117 @@
+# ---
+# - name: Install Jenkins
+#   hosts: linux
+#   gather_facts: false
+#   become: true
+#   collections:
+#     - amazon.aws
+#   tasks:
+#     - name: Install yum
+#       yum:
+#         name:
+#           - wget
+
+#     - name: Install OpenJDK 11
+#       amazon.aws.ec2:
+#         name: java-openjdk11 -y
+#         state: present
+
+#     - name: Download jenkins.repo
+#       get_url:
+#         url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+#         dest: /etc/yum.repos.d/jenkins.repo
+ 
+#     - name: Import Jenkins Key
+#       rpm_key:
+#         state: present
+#         key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+ 
+#     - name: upgrade yum
+#       yum:
+#         name:
+#           - upgrade
+    
+#     - name: Install Jenkins
+#       yum:
+#         name: jenkins -y
+#         state: present
+ 
+#     - name: Start & Enable Jenkins
+#       systemd:
+#         name: jenkins
+#         state: started
+#         enabled: true
+ 
+#     - name: Sleep for 30 seconds and continue with play
+#       wait_for: timeout=30
+ 
+#     - name: Get init password Jenkins
+#       shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+#       changed_when: false
+#       register: result
+ 
+#     - name: Print init password Jenkins
+#       debug:
+#         var: result.stdout
+########################################################################################
+---
+- name: Install Jenkins
+  hosts: ubuntu
+  gather_facts: false
+  become: true
+  collections:
+    - amazon.aws
+  tasks:
+      - name: Download and install Jenkins keyring
+        ansible.builtin.shell: |
+          curl -fsSL https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null &&
+          echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+    
+      # - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+      #   ansible.builtin.apt:
+      #     update_cache: yes
+      #     cache_valid_time: 3600
+
+      # - name: Wait until the lock file is removed
+      #   wait_for:
+      #     path: /var/lock/file.lock
+      #     state: absent
+
+      - name: Update apt
+        ansible.builtin.apt:
+          update_cache: true
+
+      # - name: Wait until the process is finished and pid was destroyed
+      #   wait_for:
+      #     path: /proc/2667/status
+      #     state: absent
+
+      # - name: Wait until the process is finished and pid was destroyed
+      #   wait_for:
+      #     path: /proc/2668/status
+      #     state: absent
+
+      # - name: Wait until the process is finished and pid was destroyed
+      #   wait_for:
+      #     path: /proc/2669/status
+      #     state: absent
+
+      - name: Install openJDK
+        ansible.builtin.apt:
+          name: "{{ packages }}"
+          state: "present"
+        vars:
+          packages:
+            - openjdk-11-jre
+            - jenkins
+      - name: Sleep for 30 seconds and continue with play
+        wait_for: timeout=30
+  
+      - name: Get init password Jenkins
+        shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+        changed_when: false
+        register: result
+  
+      - name: Print init password Jenkins
+        debug:
+          var: result.stdout

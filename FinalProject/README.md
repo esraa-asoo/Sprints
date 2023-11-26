@@ -7,14 +7,14 @@ The DevOps Bootcamp Capstone Project aims to create a fully automated CI/CD pipe
 
 
 # Prerequisites:
-✅ Git
-✅ Terraform
-✅ Ansible
-✅ Docker
-✅ Docker Compose
-✅ Kubernetes
-✅ AWS
-✅ Jenkins
+✅  Git
+✅  Terraform
+✅  Ansible
+✅  Docker
+✅  Docker Compose
+✅  Kubernetes
+✅  AWS
+✅  Jenkins
 # 🏗️ To set up the project, follow these steps:
 - Clone the project repository to your local machine.
 

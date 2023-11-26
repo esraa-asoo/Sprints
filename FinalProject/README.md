@@ -1,5 +1,5 @@
 # FinalProject-MySQL-Python
-# 🎉 DevOps-Bootcamp-Capstone-Project 🎉
+# 🎉 DevOps-Bootcamp-Project 🎉
 # ✨ Introduction
 The DevOps Bootcamp Capstone Project aims to create a fully automated CI/CD pipeline for a web application running on Kubernetes. The project utilizes various tools and technologies such as Terraform, Ansible, Docker, and Kubernetes to achieve the objective.
 
@@ -76,5 +76,6 @@ https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html
 - Creating the Amazon EBS CSI driver IAM role for service accounts 
   https://docs.aws.amazon.com/eks/latest/userguide/csi-iam-role.html
 - Creating an IAM OIDC provider for your cluster 
-  https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-- - - service-accounts.html
-Supported Versions table https://github.com/kubernetes/ingress-nginx#supported-versions-table
+  https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html
+- Supported Versions table
+  https://github.com/kubernetes/ingress-nginx#supported-versions-table
